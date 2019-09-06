@@ -10,10 +10,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import styles from './styles';
-import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import AuthActions from '../../store/ducks/auth';
+
+import styles from './styles';
 
 class SignIn extends Component {
   static propTypes = {
@@ -27,9 +28,9 @@ class SignIn extends Component {
 
   handleSubmit = () => {
     const {email, password} = this.state;
-    const {SignInRequest} = this.props;
+    const {signInRequest} = this.props;
 
-    SignInRequest(email, password);
+    signInRequest(email, password);
 
     // action do REDUX para enviar email e senha que chama uma func do SAGA
   };
@@ -82,7 +83,6 @@ class SignIn extends Component {
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(AuthActions, dispatch);
-bindActionCreators(AuthActions, dispatch);
 
 export default connect(
   null,
