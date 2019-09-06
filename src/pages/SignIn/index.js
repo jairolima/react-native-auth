@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 
 import {
   View,
@@ -10,8 +11,15 @@ import {
 } from 'react-native';
 
 import styles from './styles';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import AuthActions from '../../store/ducks/auth';
 
-export default class SignIn extends Component {
+class SignIn extends Component {
+  static propTypes = {
+    signInRequest: PropTypes.func.isRequired,
+  };
+
   state = {
     email: '',
     password: '',
@@ -19,6 +27,9 @@ export default class SignIn extends Component {
 
   handleSubmit = () => {
     const {email, password} = this.state;
+    const {SignInRequest} = this.props;
+
+    SignInRequest(email, password);
 
     // action do REDUX para enviar email e senha que chama uma func do SAGA
   };
@@ -68,3 +79,12 @@ export default class SignIn extends Component {
     );
   }
 }
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(AuthActions, dispatch);
+bindActionCreators(AuthActions, dispatch);
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(SignIn);
